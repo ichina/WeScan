@@ -11,6 +11,8 @@ import UIKit
 
 final class CardOverlayView: UIView {
 
+    private let cardRatio: CGFloat = 1.586
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.isUserInteractionEnabled = false
@@ -31,20 +33,25 @@ final class CardOverlayView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        let bezierPath = UIBezierPath(
-            roundedRect: self.bounds.inset(
-                by: UIEdgeInsets(top: 200, left: 40, bottom: 200, right: 40)
-            ),
-            cornerRadius: 8)
+        let path = UIBezierPath(roundedRect: bounds.insetBy(dx: -1, dy: -1), cornerRadius: 0)
 
-        //        circleLayer.frame = rect
-        //        circleLayer.path = bezierPath.cgPath
-        //
-        //        image?.draw(in: rect)
-    }
-    override func draw(_ rect: CGRect) {
-        super.draw(rect)
+        let origin = CGPoint(x: 20, y: bounds.height / 4)
+        let width = bounds.width - origin.x * 2
+        let height = width / cardRatio
+        let rect = CGRect(origin: origin, size: CGSize(width: width, height: height))
 
+        let holePath = UIBezierPath(
+            roundedRect: rect,
+            cornerRadius: 16)
+        path.append(holePath)
+        path.usesEvenOddFillRule = true
+
+
+        let fillLayer = holeLayer
+        fillLayer.path = path.cgPath
+        fillLayer.fillRule = CAShapeLayerFillRule.evenOdd
+//        fillLayer.opacity = 0.5
+        layer.addSublayer(fillLayer)
     }
 
 }

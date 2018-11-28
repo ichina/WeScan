@@ -51,6 +51,7 @@ final class ScannerViewController: UIViewController {
         toolbar.barStyle = .blackTranslucent
         toolbar.tintColor = .white
         toolbar.translatesAutoresizingMaskIntoConstraints = false
+        toolbar.isHidden = true
         return toolbar
     }()
     
@@ -72,7 +73,7 @@ final class ScannerViewController: UIViewController {
     }()
 
     lazy private var cardOverlayView: UIView = {
-        return UIView()
+        return CardOverlayView(frame: view.bounds)
     }()
 
     // MARK: - Life Cycle
@@ -85,6 +86,7 @@ final class ScannerViewController: UIViewController {
         setupViews()
         setupToolbar()
         setupConstraints()
+        setupOverlay()
         
         captureSessionManager = CaptureSessionManager(videoPreviewLayer: videoPreviewlayer)
         captureSessionManager?.delegate = self
@@ -138,6 +140,10 @@ final class ScannerViewController: UIViewController {
             flashButton.image = flashOffImage
             flashButton.tintColor = UIColor.lightGray
         }
+    }
+
+    private func setupOverlay() {
+        view.addSubview(cardOverlayView);
     }
     
     private func setupConstraints() {
