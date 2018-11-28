@@ -71,6 +71,10 @@ final class ScannerViewController: UIViewController {
         return activityIndicator
     }()
 
+    lazy private var cardOverlayView: UIView = {
+        return UIView()
+    }()
+
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
