@@ -16,7 +16,7 @@ enum FlashResult {
 }
 
 /// The `ScannerViewController` offers an interface to give feedback to the user regarding quadrilaterals that are detected. It also gives the user the opportunity to capture an image with a detected rectangle.
-final class ScannerViewController: UIViewController {
+class ScannerViewController: UIViewController {
     
     private var captureSessionManager: CaptureSessionManager?
     private let videoPreviewlayer = AVCaptureVideoPreviewLayer()
@@ -31,7 +31,7 @@ final class ScannerViewController: UIViewController {
         return true
     }
     
-    lazy private var shutterButton: ShutterButton = {
+    lazy var shutterButton: ShutterButton = {
         let button = ShutterButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(captureImage(_:)), for: .touchUpInside)
@@ -72,10 +72,6 @@ final class ScannerViewController: UIViewController {
         return activityIndicator
     }()
 
-    lazy private var cardOverlayView: UIView = {
-        return CardOverlayView(frame: view.bounds)
-    }()
-
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
@@ -86,8 +82,7 @@ final class ScannerViewController: UIViewController {
         setupViews()
         setupToolbar()
         setupConstraints()
-        setupOverlay()
-        
+
         captureSessionManager = CaptureSessionManager(videoPreviewLayer: videoPreviewlayer)
         captureSessionManager?.delegate = self
     }
@@ -124,8 +119,8 @@ final class ScannerViewController: UIViewController {
         quadView.translatesAutoresizingMaskIntoConstraints = false
         quadView.editable = false
         view.addSubview(quadView)
-        view.addSubview(cancelButton)
         view.addSubview(shutterButton)
+        view.addSubview(cancelButton)
         view.addSubview(activityIndicator)
         view.addSubview(toolbar)
     }
@@ -142,10 +137,6 @@ final class ScannerViewController: UIViewController {
         }
     }
 
-    private func setupOverlay() {
-        view.addSubview(cardOverlayView);
-    }
-    
     private func setupConstraints() {
         var toolbarConstraints = [NSLayoutConstraint]()
         var quadViewConstraints = [NSLayoutConstraint]()
@@ -257,7 +248,11 @@ final class ScannerViewController: UIViewController {
         guard let imageScannerController = navigationController as? ImageScannerController else { return }
         imageScannerController.imageScannerDelegate?.imageScannerControllerDidCancel(imageScannerController)
     }
-    
+
+    func handleImage(_ image: UIImage, quad: Quadrilateral?) {
+        let editVC = EditScanViewController(image: image, quad: quad)
+        navigationController?.pushViewController(editVC, animated: false)
+    }
 }
 
 extension ScannerViewController: RectangleDetectionDelegateProtocol {
@@ -278,9 +273,7 @@ extension ScannerViewController: RectangleDetectionDelegateProtocol {
     func captureSessionManager(_ captureSessionManager: CaptureSessionManager, didCapturePicture picture: UIImage, withQuad quad: Quadrilateral?) {
         activityIndicator.stopAnimating()
         
-        let editVC = EditScanViewController(image: picture, quad: quad)
-        navigationController?.pushViewController(editVC, animated: false)
-        
+        self.handleImage(picture, quad: quad)
         shutterButton.isUserInteractionEnabled = true
     }
     

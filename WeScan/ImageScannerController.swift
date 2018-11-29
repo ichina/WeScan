@@ -57,7 +57,7 @@ public final class ImageScannerController: UINavigationController {
     }()
     
     public required init() {
-        let scannerViewController = ScannerViewController()
+        let scannerViewController = CardScannerViewController()
         super.init(rootViewController: scannerViewController)
         navigationBar.tintColor = .black
         navigationBar.isTranslucent = false

@@ -160,7 +160,7 @@ final class CaptureSessionManager: NSObject, AVCaptureVideoDataOutputSampleBuffe
     }
     
     private func processRectangle(rectangle: Quadrilateral?, imageSize: CGSize) {
-        if let rectangle = rectangle {
+        if let rectangle = rectangle, isRectangleInBounds(rectangle, size: imageSize) {
             
             self.noRectangleCount = 0
             self.rectangleFunnel.add(rectangle, currentlyDisplayedRectangle: self.displayedRectangleResult?.rectangle) { [weak self] (result, rectangle) in
@@ -207,13 +207,18 @@ final class CaptureSessionManager: NSObject, AVCaptureVideoDataOutputSampleBuffe
             guard let strongSelf = self else {
                 return
             }
-            
+            #if DEBUG
             strongSelf.delegate?.captureSessionManager(strongSelf, didDetectQuad: quad, rectangleResult.imageSize)
+            #endif
         }
         
         return quad
     }
-    
+
+    func isRectangleInBounds(_ rectangle: Quadrilateral, size: CGSize) -> Bool {
+        print(rectangle.description, size)
+        return true
+    }
 }
 
 extension CaptureSessionManager: AVCapturePhotoCaptureDelegate {

@@ -52,6 +52,7 @@
 		A1F22EA5202DB3AA001723AD /* CGPoint+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F22EA4202DB3AA001723AD /* CGPoint+Utils.swift */; };
 		A1F22ECE2031937E001723AD /* EditScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F22ECD2031937E001723AD /* EditScanViewController.swift */; };
 		B05E6546219EB31B00368648 /* CardOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05E6545219EB31B00368648 /* CardOverlayView.swift */; };
+		B079B32921AFC67F000AA341 /* CardScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B079B32821AFC67F000AA341 /* CardScannerViewController.swift */; };
 		B9274D3A219B951000F9FCD1 /* CIImage+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9274D39219B951000F9FCD1 /* CIImage+Utils.swift */; };
 		B92A2C8321578D28002874E5 /* CaptureSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92A2C8221578D28002874E5 /* CaptureSession.swift */; };
 		B940E38A21A77192003B3C0B /* enhance@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B940E38721A77192003B3C0B /* enhance@3x.png */; };
@@ -222,6 +223,7 @@
 		A1F22EA4202DB3AA001723AD /* CGPoint+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Utils.swift"; sourceTree = "<group>"; };
 		A1F22ECD2031937E001723AD /* EditScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditScanViewController.swift; sourceTree = "<group>"; };
 		B05E6545219EB31B00368648 /* CardOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardOverlayView.swift; sourceTree = "<group>"; };
+		B079B32821AFC67F000AA341 /* CardScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardScannerViewController.swift; sourceTree = "<group>"; };
 		B9274D39219B951000F9FCD1 /* CIImage+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CIImage+Utils.swift"; sourceTree = "<group>"; };
 		B92A2C8221578D28002874E5 /* CaptureSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureSession.swift; sourceTree = "<group>"; };
 		B940E38721A77192003B3C0B /* enhance@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "enhance@3x.png"; sourceTree = "<group>"; };
@@ -446,6 +448,7 @@
 				A1D4BD0D202C57A400FCDDEC /* CaptureSessionManager.swift */,
 				A1F22EA2202DAA74001723AD /* RectangleFeaturesFunnel.swift */,
 				A165F67D2044741B002D5ED6 /* ShutterButton.swift */,
+				B079B32821AFC67F000AA341 /* CardScannerViewController.swift */,
 			);
 			path = Scan;
 			sourceTree = "<group>";
@@ -757,6 +760,7 @@
 			files = (
 				A11C5CDB20495EC9005075FE /* AVCaptureVideoOrientation+Utils.swift in Sources */,
 				A1DF90F22035992A00841A11 /* CGAffineTransform+Utils.swift in Sources */,
+				B079B32921AFC67F000AA341 /* CardScannerViewController.swift in Sources */,
 				A1F22EA3202DAA74001723AD /* RectangleFeaturesFunnel.swift in Sources */,
 				A1D4BD0E202C57A400FCDDEC /* CaptureSessionManager.swift in Sources */,
 				A1F22ECE2031937E001723AD /* EditScanViewController.swift in Sources */,
