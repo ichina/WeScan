@@ -13,9 +13,19 @@ final class CardOverlayView: UIView {
 
     private let cardRatio: CGFloat = 1.586
 
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.white
+        label.font = UIFont.systemFont(ofSize: 32, weight: .medium)
+        label.text = "Front side"
+        label.textAlignment = .center
+        return label
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.isUserInteractionEnabled = false
+        self.addSubview(titleLabel)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -24,8 +34,8 @@ final class CardOverlayView: UIView {
 
     lazy private var holeLayer: CAShapeLayer = {
         let layer = CAShapeLayer()
-        layer.fillColor = UIColor.init(white: 0, alpha: 0.5).cgColor
-        layer.strokeColor = UIColor.white.cgColor
+        layer.fillColor = UIColor(white: 0, alpha: 0.5).cgColor
+        layer.strokeColor = UIColor(white: 1, alpha: 0.8).cgColor
         layer.lineWidth = 1.0
         return layer
     }()
@@ -50,9 +60,14 @@ final class CardOverlayView: UIView {
         let fillLayer = holeLayer
         fillLayer.path = path.cgPath
         fillLayer.fillRule = CAShapeLayerFillRule.evenOdd
-//        fillLayer.opacity = 0.5
         layer.addSublayer(fillLayer)
+
+        titleLabel.frame = CGRect(x: rect.origin.x, y: rect.maxY + 40, width: rect.width, height: 80);
+        bringSubviewToFront(titleLabel)
     }
 
+    func setText(_ text: String) {
+        titleLabel.text = text
+    }
 }
 

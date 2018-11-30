@@ -123,6 +123,7 @@ class ScannerViewController: UIViewController {
         view.addSubview(cancelButton)
         view.addSubview(activityIndicator)
         view.addSubview(toolbar)
+        view.backgroundColor = .black
     }
     
     private func setupToolbar() {

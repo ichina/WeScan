@@ -44,7 +44,10 @@ public final class ImageScannerController: UINavigationController {
     
     /// The object that acts as the delegate of the `ImageScannerController`.
     weak public var imageScannerDelegate: ImageScannerControllerDelegate?
-    
+
+    weak public var cardScannerDelegate: CardScannerControllerDelegate?
+    internal var cardFrontSide: ImageScannerResults?
+
     // MARK: - Life Cycle
     
     /// A black UIView, used to quickly display a black screen when the shutter button is presseed.
@@ -59,8 +62,9 @@ public final class ImageScannerController: UINavigationController {
     public required init() {
         let scannerViewController = CardScannerViewController()
         super.init(rootViewController: scannerViewController)
-        navigationBar.tintColor = .black
-        navigationBar.isTranslucent = false
+        navigationBar.tintColor = .white
+        navigationBar.isTranslucent = true
+        navigationBar.barStyle = .blackTranslucent
         self.view.addSubview(blackFlashView)
         self.view.backgroundColor = UIColor.black
         setupConstraints()
@@ -118,4 +122,14 @@ public struct ImageScannerResults {
     /// The detected rectangle which was used to generate the `scannedImage`.
     public var detectedRectangle: Quadrilateral
     
+}
+
+public struct CardScannerResults {
+    public var frontSide: ImageScannerResults
+    public var backSide: ImageScannerResults
+}
+
+public protocol CardScannerControllerDelegate: NSObjectProtocol {
+    func cardScannerController(_ scanner: ImageScannerController,
+                               didFinishScanningWithResults results: CardScannerResults)
 }

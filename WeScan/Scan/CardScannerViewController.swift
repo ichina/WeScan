@@ -8,15 +8,32 @@
 
 import UIKit
 
+enum CardSide {
+    case front, back
+}
+
 final class CardScannerViewController: ScannerViewController {
 
-    lazy private var cardOverlayView: UIView = {
+    private let cardSide: CardSide
+
+    lazy private var cardOverlayView: CardOverlayView = {
         return CardOverlayView(frame: view.bounds)
     }()
+
+    init(cardSide: CardSide = .front) {
+        self.cardSide = cardSide
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.insertSubview(cardOverlayView, belowSubview: shutterButton)
+        cardOverlayView.setText(cardSide == .front ? "Front side" : "Back side")
         shutterButton.isHidden = true
     }
 
@@ -56,8 +73,7 @@ final class CardScannerViewController: ScannerViewController {
         let finalImage = uiImage.withFixedOrientation()
 
         let results = ImageScannerResults(originalImage: image, scannedImage: finalImage, enhancedImage: enhancedImage, doesUserPreferEnhancedImage: false, detectedRectangle: scaledQuad)
-        let reviewViewController = ReviewViewController(results: results)
-
+        let reviewViewController = ReviewViewController(results: results, cardSide: cardSide)
         navigationController?.pushViewController(reviewViewController, animated: true)
 
     }

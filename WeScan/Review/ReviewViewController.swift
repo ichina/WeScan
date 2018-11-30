@@ -13,7 +13,8 @@ final class ReviewViewController: UIViewController {
     
     var enhancedImageIsAvailable = false
     var isCurrentlyDisplayingEnhancedImage = false
-    
+    private let cardSide: CardSide
+
     lazy private var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
@@ -42,8 +43,9 @@ final class ReviewViewController: UIViewController {
     
     // MARK: - Life Cycle
     
-    init(results: ImageScannerResults) {
+    init(results: ImageScannerResults, cardSide: CardSide = .front) {
         self.results = results
+        self.cardSide = cardSide
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -54,7 +56,7 @@ final class ReviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        enhancedImageIsAvailable = results.enhancedImage != nil
+        enhancedImageIsAvailable = false// results.enhancedImage != nil
         
         setupViews()
         setupToolbar()
@@ -66,7 +68,8 @@ final class ReviewViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        navigationController?.setNavigationBarHidden(false, animated: false)
+
         // We only show the toolbar (with the enhance button) if the enhanced image is available.
         if enhancedImageIsAvailable {
             navigationController?.setToolbarHidden(false, animated: true)
@@ -124,7 +127,26 @@ final class ReviewViewController: UIViewController {
         var newResults = results
         newResults.scannedImage = results.scannedImage
         newResults.doesUserPreferEnhancedImage = isCurrentlyDisplayingEnhancedImage
-        imageScannerController.imageScannerDelegate?.imageScannerController(imageScannerController, didFinishScanningWithResults: newResults)
+
+        if cardSide == .back {
+
+            imageScannerController.imageScannerDelegate?.imageScannerController(imageScannerController, didFinishScanningWithResults: newResults)
+            if let frontResult = imageScannerController.cardFrontSide {
+                imageScannerController.cardScannerDelegate?
+                    .cardScannerController(
+                        imageScannerController,
+                        didFinishScanningWithResults:
+                            CardScannerResults(
+                                frontSide: frontResult,
+                                backSide: newResults
+                            )
+                    )
+            }
+        } else {
+            imageScannerController.cardFrontSide = newResults
+            let scannerViewController = CardScannerViewController(cardSide: .back)
+            imageScannerController.pushViewController(scannerViewController, animated: true)
+        }
     }
 
 }
