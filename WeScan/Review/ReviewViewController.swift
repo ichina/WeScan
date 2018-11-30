@@ -130,7 +130,7 @@ final class ReviewViewController: UIViewController {
 
         if cardSide == .back {
 
-            imageScannerController.imageScannerDelegate?.imageScannerController(imageScannerController, didFinishScanningWithResults: newResults)
+//            imageScannerController.imageScannerDelegate?.imageScannerController(imageScannerController, didFinishScanningWithResults: newResults)
             if let frontResult = imageScannerController.cardFrontSide {
                 imageScannerController.cardScannerDelegate?
                     .cardScannerController(
