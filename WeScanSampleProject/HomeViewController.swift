@@ -8,6 +8,7 @@
 
 import UIKit
 import WeScan
+import AcuantMobileSDK
 
 final class HomeViewController: UIViewController {
     
@@ -81,8 +82,10 @@ final class HomeViewController: UIViewController {
     // MARK: - Actions
     
     @objc func presentScanController(_ sender: UIButton) {
-        let scannerVC = ImageScannerController()
+        let scannerVC = ImageScannerController(imageCropper: AcuantImageCropper())
         scannerVC.imageScannerDelegate = self
+        scannerVC.cardScannerDelegate = self
+
         present(scannerVC, animated: true, completion: nil)
     }
     
@@ -101,4 +104,73 @@ extension HomeViewController: ImageScannerControllerDelegate {
         scanner.dismiss(animated: true, completion: nil)
     }
     
+}
+
+extension HomeViewController: CardScannerControllerDelegate {
+    func cardScannerController(_ scanner: ImageScannerController,
+                               didFinishScanningWithResults results: CardScannerResults) {
+        print(results)
+    }
+
+}
+
+final class AcuantImageCropper: ImageCropper, InitializationDelegate {
+    let credential = Credential()
+
+    static var isInitialized = false
+
+    init() {
+        if !AcuantImageCropper.isInitialized {
+            let endPoints = Endpoints()
+            endPoints.frmEndpoint = "https://frm.acuant.net/api/v1"
+            endPoints.idEndpoint = "https://services.assureid.net"
+            endPoints.healthInsuranceEndpoint = "https://medicscan.acuant.net/api/v1"
+
+
+            credential.endpoints = endPoints
+            credential.username = "anton@osome.com"
+            credential.password = "vasmyc627rjtmz8t"
+            credential.subscription = "d761aec3-3f39-4c0f-9375-8256c4df7d85"
+
+            Controller.initialize(credential: credential, delegate:self)
+        }
+    }
+
+    func cropImage(_ image: UIImage, quad: Quadrilateral) -> UIImage? {
+        let image = cropAquantImage(image: image)
+        guard let result = image?.image else {
+            print(image?.error)
+            return nil
+        }
+        return result
+    }
+
+    func cropAquantImage(image: UIImage) -> Image? {
+        let croppingData = CroppingData()
+        croppingData.image = image
+
+        let cardAttributes = CardAttributes()
+        cardAttributes.cardType = CardType.AUTO
+
+        let croppingOptions = CroppingOptions()
+        croppingOptions.cardAtributes = cardAttributes
+        croppingOptions.imageMetricsRequired = true
+        croppingOptions.isHealthCard = false
+//        let start = CFAbsoluteTimeGetCurrent()
+        let croppedImage = Controller.crop(options: croppingOptions, data: croppingData)
+//        let elapsed = CFAbsoluteTimeGetCurrent() - start
+//        print("Crop Time:\(elapsed)")
+        return croppedImage
+    }
+
+    func initializationFinished(error: AcuantMobileSDK.AcuantError?) {
+        if let error = error {
+            print(error)
+            return
+        }
+        AcuantImageCropper.isInitialized = true
+        print("INITIALIZED")
+    }
+
+
 }

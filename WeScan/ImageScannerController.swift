@@ -59,8 +59,8 @@ public final class ImageScannerController: UINavigationController {
         return view
     }()
     
-    public required init() {
-        let scannerViewController = CardScannerViewController()
+    public required init(imageCropper: ImageCropper = DefaultImageCropper()) {
+        let scannerViewController = CardScannerViewController(imageCropper: imageCropper)
         super.init(rootViewController: scannerViewController)
         navigationBar.tintColor = .white
         navigationBar.isTranslucent = true

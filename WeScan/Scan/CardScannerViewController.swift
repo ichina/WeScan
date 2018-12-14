@@ -15,13 +15,15 @@ enum CardSide {
 final class CardScannerViewController: ScannerViewController {
 
     private let cardSide: CardSide
+    private let imageCropper: ImageCropper
 
     lazy private var cardOverlayView: CardOverlayView = {
         return CardOverlayView(frame: view.bounds)
     }()
 
-    init(cardSide: CardSide = .front) {
+    init(cardSide: CardSide = .front, imageCropper: ImageCropper = DefaultImageCropper()) {
         self.cardSide = cardSide
+        self.imageCropper = imageCropper
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -39,12 +41,41 @@ final class CardScannerViewController: ScannerViewController {
 
     override func handleImage(_ image: UIImage, quad: Quadrilateral?) {
         let quad = quad ?? EditScanViewController.defaultQuad(forImage: image)
-        guard let ciImage = CIImage(image: image.applyingPortraitOrientation()) else {
-            if let imageScannerController = navigationController as? ImageScannerController {
-                let error = ImageScannerControllerError.ciImageCreation
-                imageScannerController.imageScannerDelegate?.imageScannerController(imageScannerController, didFailWithError: error)
+
+        DispatchQueue.global().async {
+            guard let finalImage = self.imageCropper.cropImage(image, quad: quad) else {
+                if let imageScannerController = self.navigationController as? ImageScannerController {
+                    let error = ImageScannerControllerError.ciImageCreation
+                    DispatchQueue.main.async {
+                        imageScannerController.imageScannerDelegate?.imageScannerController(imageScannerController, didFailWithError: error)
+                    }
+                }
+                return
             }
-            return
+
+            let results = ImageScannerResults(
+                originalImage: image, scannedImage: finalImage, enhancedImage: nil,
+                doesUserPreferEnhancedImage: false, detectedRectangle: quad
+            )
+
+            let reviewViewController = ReviewViewController(results: results, cardSide: self.cardSide)
+            DispatchQueue.main.async {
+                self.navigationController?.pushViewController(reviewViewController, animated: true)
+            }
+        }
+    }
+}
+
+public protocol ImageCropper {
+    func cropImage(_ image: UIImage, quad: Quadrilateral) -> UIImage?
+}
+
+final public class DefaultImageCropper: ImageCropper {
+    public init() {}
+
+    public func cropImage(_ image: UIImage, quad: Quadrilateral) -> UIImage? {
+        guard let ciImage = CIImage(image: image.applyingPortraitOrientation()) else {
+            return nil
         }
 
         let scaledQuad = quad
@@ -59,7 +90,7 @@ final class CardScannerViewController: ScannerViewController {
             "inputBottomRight": CIVector(cgPoint: cartesianScaledQuad.topRight)
             ])
 
-        let enhancedImage = filteredImage.applyingAdaptiveThreshold()?.withFixedOrientation()
+        //        let enhancedImage = filteredImage.applyingAdaptiveThreshold()?.withFixedOrientation()
 
         var uiImage: UIImage!
 
@@ -71,10 +102,6 @@ final class CardScannerViewController: ScannerViewController {
         }
 
         let finalImage = uiImage.withFixedOrientation()
-
-        let results = ImageScannerResults(originalImage: image, scannedImage: finalImage, enhancedImage: enhancedImage, doesUserPreferEnhancedImage: false, detectedRectangle: scaledQuad)
-        let reviewViewController = ReviewViewController(results: results, cardSide: cardSide)
-        navigationController?.pushViewController(reviewViewController, animated: true)
-
+        return finalImage
     }
 }
