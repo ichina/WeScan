@@ -45,7 +45,7 @@ final class CardOverlayView: UIView {
 
         let path = UIBezierPath(roundedRect: bounds.insetBy(dx: -1, dy: -1), cornerRadius: 0)
 
-        let origin = CGPoint(x: 20, y: bounds.height / 4)
+        let origin = CGPoint(x: 10, y: bounds.height / 4)
         let width = bounds.width - origin.x * 2
         let height = width / cardRatio
         let rect = CGRect(origin: origin, size: CGSize(width: width, height: height))
