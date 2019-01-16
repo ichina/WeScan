@@ -51,7 +51,7 @@ public class PKCCropViewController: UIViewController {
     private var imageRotateRate: Float = 0
 
     public init(_ image: UIImage, tag: Int = 0, scanType: ScanType = .passport) {
-        self.overlay = CardOverlayView(frame: .zero, scanType: scanType)
+        self.overlay = CardOverlayView(frame: .zero, scanType: scanType, shadowAlpha: 0.9)
         self.scanType = scanType
 
         super.init(nibName: "PKCCropViewController", bundle: Bundle(for: PKCCrop.self))

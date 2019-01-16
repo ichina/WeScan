@@ -27,7 +27,7 @@ final class ReviewViewController: UIViewController {
     }()
 
     lazy private var cardOverlayView: CardOverlayView = {
-        return CardOverlayView(frame: view.bounds, scanType: scanType, shadowAlpha: 0.8)
+        return CardOverlayView(frame: view.bounds, scanType: scanType, shadowAlpha: 0.9)
     }()
     
     lazy private var enhanceButton: UIBarButtonItem = {
@@ -208,7 +208,7 @@ final class ReviewViewController: UIViewController {
                 }
             }
         case .passport:
-            if let image = results.scannedImage.imageRotatedByDegrees(90, flip: false) {
+            if let image = results.scannedImage.imageRotatedByDegrees(-90, flip: false) {
                 results.scannedImage = image
             }
 
