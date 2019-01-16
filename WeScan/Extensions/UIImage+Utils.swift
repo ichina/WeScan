@@ -34,5 +34,18 @@ extension UIImage {
         
         return UIImage(cgImage: croppedImage)
     }
-    
+
+    func scaledImage(at rect: CGRect, scaleFactor: CGFloat = 1.0) -> UIImage? {
+
+        guard let cgImage = self.cgImage else {
+            return nil
+        }
+
+        guard let croppedImage = cgImage.cropping(to: rect) else {
+            return nil
+        }
+
+        return UIImage(cgImage: croppedImage)
+    }
+
 }

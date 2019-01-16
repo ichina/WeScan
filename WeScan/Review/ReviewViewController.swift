@@ -13,7 +13,7 @@ final class ReviewViewController: UIViewController {
     
     var enhancedImageIsAvailable = false
     var isCurrentlyDisplayingEnhancedImage = false
-    private let cardSide: CardSide
+    private let scanType: ScanType
 
     lazy private var imageView: UIImageView = {
         let imageView = UIImageView()
@@ -21,9 +21,13 @@ final class ReviewViewController: UIViewController {
         imageView.isOpaque = true
         imageView.image = results.scannedImage
         imageView.backgroundColor = .black
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
+    }()
+
+    lazy private var cardOverlayView: CardOverlayView = {
+        return CardOverlayView(frame: view.bounds, scanType: scanType, shadowAlpha: 0.8)
     }()
     
     lazy private var enhanceButton: UIBarButtonItem = {
@@ -32,20 +36,25 @@ final class ReviewViewController: UIViewController {
         button.tintColor = .white
         return button
     }()
-    
-    lazy private var doneButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(finishScan))
-        button.tintColor = navigationController?.navigationBar.tintColor
+
+    lazy var doneButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(finishScan), for: .touchUpInside)
+        button.setTitle("Well done!", for: .normal)
+        button.layer.cornerRadius = 28
+        button.backgroundColor = .white
+        button.setTitleColor(.black, for: .normal)
         return button
     }()
-    
-    private let results: ImageScannerResults
+
+    private var results: ImageScannerResults
     
     // MARK: - Life Cycle
     
-    init(results: ImageScannerResults, cardSide: CardSide = .front) {
+    init(results: ImageScannerResults, scanType: ScanType = .general) {
         self.results = results
-        self.cardSide = cardSide
+        self.scanType = scanType
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -61,16 +70,23 @@ final class ReviewViewController: UIViewController {
         setupViews()
         setupToolbar()
         setupConstraints()
-        
-        title = NSLocalizedString("wescan.review.title", tableName: nil, bundle: Bundle(for: ReviewViewController.self), value: "Review", comment: "The review title of the ReviewController")
-        navigationItem.rightBarButtonItem = doneButton
+
+        switch scanType {
+        case .passport:
+            title = "Passport"
+        case .card(let side):
+            title = side == .front ? "Front Side" : "Back Side"
+        default:
+            title = NSLocalizedString("wescan.review.title", tableName: nil, bundle: Bundle(for: ReviewViewController.self), value: "Review", comment: "The review title of the ReviewController")
+        }
+
+        navigationController?.navigationBar.shadowImage = UIImage()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationController?.setNavigationBarHidden(false, animated: true)
 
-        // We only show the toolbar (with the enhance button) if the enhanced image is available.
         if enhancedImageIsAvailable {
             navigationController?.setToolbarHidden(false, animated: true)
         }
@@ -85,6 +101,8 @@ final class ReviewViewController: UIViewController {
     
     private func setupViews() {
         view.addSubview(imageView)
+        view.addSubview(cardOverlayView)
+        view.addSubview(doneButton)
     }
     
     private func setupToolbar() {
@@ -103,8 +121,14 @@ final class ReviewViewController: UIViewController {
             view.bottomAnchor.constraint(equalTo: imageView.bottomAnchor),
             view.leadingAnchor.constraint(equalTo: imageView.leadingAnchor)
         ]
-        
-        NSLayoutConstraint.activate(imageViewConstraints)
+        let doneButtonConstraints = [
+            doneButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            doneButton.widthAnchor.constraint(equalToConstant: 180.0),
+            doneButton.heightAnchor.constraint(equalToConstant: 56.0),
+            view.bottomAnchor.constraint(equalTo: doneButton.bottomAnchor, constant: 8.0)
+        ]
+
+        NSLayoutConstraint.activate(imageViewConstraints + doneButtonConstraints)
     }
     
     // MARK: - Actions
@@ -116,37 +140,90 @@ final class ReviewViewController: UIViewController {
             enhanceButton.tintColor = .white
         } else {
             imageView.image = results.enhancedImage
-            enhanceButton.tintColor = UIColor(red: 64 / 255, green: 159 / 255, blue: 255 / 255, alpha: 1.0)
+            enhanceButton.tintColor = UIColor(red: 64.0 / 255, green: 159.0 / 255, blue: 255.0 / 255, alpha: 1.0)
         }
         
         isCurrentlyDisplayingEnhancedImage.toggle()
     }
     
     @objc private func finishScan() {
-        guard let imageScannerController = navigationController as? ImageScannerController else { return }
-        var newResults = results
-        newResults.scannedImage = results.scannedImage
-        newResults.doesUserPreferEnhancedImage = isCurrentlyDisplayingEnhancedImage
+        guard let imageScannerController = navigationController as? ImageScannerController,
+            let image = self.imageView.image else { return }
 
-        if cardSide == .back {
+        let imageSize = image.size
+        let bounds = cardOverlayView.bounds
+        let imageRatio = imageSize.width / imageSize.height
+        let boundsRatio = bounds.width / bounds.height
 
-//            imageScannerController.imageScannerDelegate?.imageScannerController(imageScannerController, didFinishScanningWithResults: newResults)
-            if let frontResult = imageScannerController.cardFrontSide {
-                imageScannerController.cardScannerDelegate?
-                    .cardScannerController(
-                        imageScannerController,
-                        didFinishScanningWithResults:
+        let scale = imageRatio < boundsRatio ? (bounds.width / imageSize.width) : (bounds.height / imageSize.height)
+        var imageFrame: CGRect
+        if imageRatio > boundsRatio {
+            imageFrame = CGRect(
+                x: (imageSize.width - bounds.width / scale) / 2,
+                y: 0,
+                width: bounds.width / scale,
+                height: bounds.height / scale
+            )
+        } else {
+            imageFrame = CGRect(
+                x: 0,
+                y: (imageSize.height - bounds.height / scale) / 2,
+                width: bounds.width / scale,
+                height: bounds.height / scale
+            )
+        }
+
+        var cropRect = cardOverlayView.cropArea
+        cropRect = cropRect.insetBy(dx: -(cropRect.width * 0.05), dy: -(cropRect.height * 0.05))
+
+        let rect = CGRect(
+            x: imageFrame.origin.x + (cropRect.minX / scale),
+            y: imageFrame.origin.y + (cropRect.minY / scale),
+            width: cropRect.width / scale,
+            height: cropRect.height / scale
+        )
+
+        if let image = image.scaledImage(at: rect) {
+            results.scannedImage = image
+        }
+        results.doesUserPreferEnhancedImage = isCurrentlyDisplayingEnhancedImage
+
+        switch scanType {
+        case .card(let side):
+            if side == .front {
+                imageScannerController.cardFrontSide = results
+                let scannerViewController = CardScannerViewController(scanType: .card(.back))
+                imageScannerController.pushViewController(scannerViewController, animated: true)
+            } else {
+                if let frontResult = imageScannerController.cardFrontSide {
+                    imageScannerController.cardScannerDelegate?
+                        .cardScannerController(
+                            imageScannerController,
+                            didFinishScanningWithResults:
                             CardScannerResults(
                                 frontSide: frontResult,
-                                backSide: newResults
+                                backSide: results
                             )
                     )
+                }
             }
-        } else {
-            imageScannerController.cardFrontSide = newResults
-            let scannerViewController = CardScannerViewController(cardSide: .back)
-            imageScannerController.pushViewController(scannerViewController, animated: true)
+        case .passport:
+            if let image = results.scannedImage.imageRotatedByDegrees(90, flip: false) {
+                results.scannedImage = image
+            }
+
+            imageScannerController.imageScannerDelegate?
+                .imageScannerController(
+                    imageScannerController,
+                    didFinishScanningWithResults: results)
+        default:
+            imageScannerController.imageScannerDelegate?
+                .imageScannerController(
+                    imageScannerController,
+                    didFinishScanningWithResults: results)
+
         }
+
     }
 
 }

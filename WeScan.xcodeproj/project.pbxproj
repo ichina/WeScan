@@ -51,10 +51,31 @@
 		A1F22EA3202DAA74001723AD /* RectangleFeaturesFunnel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F22EA2202DAA74001723AD /* RectangleFeaturesFunnel.swift */; };
 		A1F22EA5202DB3AA001723AD /* CGPoint+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F22EA4202DB3AA001723AD /* CGPoint+Utils.swift */; };
 		A1F22ECE2031937E001723AD /* EditScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F22ECD2031937E001723AD /* EditScanViewController.swift */; };
+		B0595F8021ED97760039102D /* backIos@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0595F7621ED97760039102D /* backIos@2x.png */; };
+		B0595F8121ED97760039102D /* backIos@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0595F7E21ED97760039102D /* backIos@3x.png */; };
+		B0595F8221ED97760039102D /* backIos.png in Resources */ = {isa = PBXBuildFile; fileRef = B0595F7F21ED97760039102D /* backIos.png */; };
 		B05E6546219EB31B00368648 /* CardOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05E6545219EB31B00368648 /* CardOverlayView.swift */; };
 		B079B32921AFC67F000AA341 /* CardScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B079B32821AFC67F000AA341 /* CardScannerViewController.swift */; };
-		B08C917521C3923F006C8ED5 /* AcuantMobileSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B08C916D21C3923F006C8ED5 /* AcuantMobileSDK.framework */; };
-		B08C917621C3923F006C8ED5 /* AcuantMobileSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B08C916D21C3923F006C8ED5 /* AcuantMobileSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B092ACD321E6FE6900F92197 /* passportOverlay.png in Resources */ = {isa = PBXBuildFile; fileRef = B092ACCB21E6FE6900F92197 /* passportOverlay.png */; };
+		B092ACEB21E7345600F92197 /* PKCCrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = B092ACD921E7345600F92197 /* PKCCrop.swift */; };
+		B092ACEC21E7345600F92197 /* PKCCropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B092ACDA21E7345600F92197 /* PKCCropViewController.swift */; };
+		B092ACED21E7345600F92197 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B092ACDB21E7345600F92197 /* UIView+.swift */; };
+		B092ACEE21E7345600F92197 /* PKCCropViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B092ACDC21E7345600F92197 /* PKCCropViewController.xib */; };
+		B092ACEF21E7345600F92197 /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B092ACDD21E7345600F92197 /* UIImageView+.swift */; };
+		B092ACF021E7345600F92197 /* PKCButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B092ACDE21E7345600F92197 /* PKCButton.swift */; };
+		B092ACF121E7345600F92197 /* PKCCropLineView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B092ACDF21E7345600F92197 /* PKCCropLineView.xib */; };
+		B092ACF221E7345600F92197 /* PKCCropHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B092ACE021E7345600F92197 /* PKCCropHelper.swift */; };
+		B092ACF321E7345600F92197 /* PKCCropLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B092ACE121E7345600F92197 /* PKCCropLineView.swift */; };
+		B092ACF521E7345600F92197 /* pkc_crop_rotate_right.png in Resources */ = {isa = PBXBuildFile; fileRef = B092ACE421E7345600F92197 /* pkc_crop_rotate_right.png */; };
+		B092ACF621E7345600F92197 /* pkc_crop_bottom_right.png in Resources */ = {isa = PBXBuildFile; fileRef = B092ACE521E7345600F92197 /* pkc_crop_bottom_right.png */; };
+		B092ACF721E7345600F92197 /* pkc_crop_bottom_left.png in Resources */ = {isa = PBXBuildFile; fileRef = B092ACE621E7345600F92197 /* pkc_crop_bottom_left.png */; };
+		B092ACF821E7345700F92197 /* pkc_crop_top_right.png in Resources */ = {isa = PBXBuildFile; fileRef = B092ACE721E7345600F92197 /* pkc_crop_top_right.png */; };
+		B092ACF921E7345700F92197 /* pkc_crop_rotate_left.png in Resources */ = {isa = PBXBuildFile; fileRef = B092ACE821E7345600F92197 /* pkc_crop_rotate_left.png */; };
+		B092ACFA21E7345700F92197 /* pkc_crop_top_left.png in Resources */ = {isa = PBXBuildFile; fileRef = B092ACE921E7345600F92197 /* pkc_crop_top_left.png */; };
+		B092AD0121E85C0400F92197 /* btnImgRotate.png in Resources */ = {isa = PBXBuildFile; fileRef = B092ACFE21E85C0400F92197 /* btnImgRotate.png */; };
+		B092AD0221E85C0400F92197 /* btnImgRotate@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B092ACFF21E85C0400F92197 /* btnImgRotate@2x.png */; };
+		B092AD0321E85C0400F92197 /* btnImgRotate@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B092AD0021E85C0400F92197 /* btnImgRotate@3x.png */; };
+		B0D1DA7821E346AC00242C7A /* ImageCropper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0D1DA7721E346AC00242C7A /* ImageCropper.swift */; };
 		B9274D3A219B951000F9FCD1 /* CIImage+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9274D39219B951000F9FCD1 /* CIImage+Utils.swift */; };
 		B92A2C8321578D28002874E5 /* CaptureSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92A2C8221578D28002874E5 /* CaptureSession.swift */; };
 		B940E38A21A77192003B3C0B /* enhance@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B940E38721A77192003B3C0B /* enhance@3x.png */; };
@@ -169,7 +190,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				A1D4BD03202C4F4100FCDDEC /* WeScan.framework in Embed Frameworks */,
-				B08C917621C3923F006C8ED5 /* AcuantMobileSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -225,9 +245,31 @@
 		A1F22EA2202DAA74001723AD /* RectangleFeaturesFunnel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleFeaturesFunnel.swift; sourceTree = "<group>"; };
 		A1F22EA4202DB3AA001723AD /* CGPoint+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Utils.swift"; sourceTree = "<group>"; };
 		A1F22ECD2031937E001723AD /* EditScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditScanViewController.swift; sourceTree = "<group>"; };
+		B0595F7621ED97760039102D /* backIos@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backIos@2x.png"; sourceTree = "<group>"; };
+		B0595F7E21ED97760039102D /* backIos@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backIos@3x.png"; sourceTree = "<group>"; };
+		B0595F7F21ED97760039102D /* backIos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backIos.png; sourceTree = "<group>"; };
 		B05E6545219EB31B00368648 /* CardOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardOverlayView.swift; sourceTree = "<group>"; };
 		B079B32821AFC67F000AA341 /* CardScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardScannerViewController.swift; sourceTree = "<group>"; };
-		B08C916D21C3923F006C8ED5 /* AcuantMobileSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AcuantMobileSDK.framework; sourceTree = "<group>"; };
+		B092ACCB21E6FE6900F92197 /* passportOverlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = passportOverlay.png; sourceTree = "<group>"; };
+		B092ACD921E7345600F92197 /* PKCCrop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PKCCrop.swift; sourceTree = "<group>"; };
+		B092ACDA21E7345600F92197 /* PKCCropViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PKCCropViewController.swift; sourceTree = "<group>"; };
+		B092ACDB21E7345600F92197 /* UIView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
+		B092ACDC21E7345600F92197 /* PKCCropViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PKCCropViewController.xib; sourceTree = "<group>"; };
+		B092ACDD21E7345600F92197 /* UIImageView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
+		B092ACDE21E7345600F92197 /* PKCButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PKCButton.swift; sourceTree = "<group>"; };
+		B092ACDF21E7345600F92197 /* PKCCropLineView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PKCCropLineView.xib; sourceTree = "<group>"; };
+		B092ACE021E7345600F92197 /* PKCCropHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PKCCropHelper.swift; sourceTree = "<group>"; };
+		B092ACE121E7345600F92197 /* PKCCropLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PKCCropLineView.swift; sourceTree = "<group>"; };
+		B092ACE421E7345600F92197 /* pkc_crop_rotate_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pkc_crop_rotate_right.png; sourceTree = "<group>"; };
+		B092ACE521E7345600F92197 /* pkc_crop_bottom_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pkc_crop_bottom_right.png; sourceTree = "<group>"; };
+		B092ACE621E7345600F92197 /* pkc_crop_bottom_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pkc_crop_bottom_left.png; sourceTree = "<group>"; };
+		B092ACE721E7345600F92197 /* pkc_crop_top_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pkc_crop_top_right.png; sourceTree = "<group>"; };
+		B092ACE821E7345600F92197 /* pkc_crop_rotate_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pkc_crop_rotate_left.png; sourceTree = "<group>"; };
+		B092ACE921E7345600F92197 /* pkc_crop_top_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pkc_crop_top_left.png; sourceTree = "<group>"; };
+		B092ACFE21E85C0400F92197 /* btnImgRotate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btnImgRotate.png; sourceTree = "<group>"; };
+		B092ACFF21E85C0400F92197 /* btnImgRotate@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btnImgRotate@2x.png"; sourceTree = "<group>"; };
+		B092AD0021E85C0400F92197 /* btnImgRotate@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btnImgRotate@3x.png"; sourceTree = "<group>"; };
+		B0D1DA7721E346AC00242C7A /* ImageCropper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCropper.swift; sourceTree = "<group>"; };
 		B9274D39219B951000F9FCD1 /* CIImage+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CIImage+Utils.swift"; sourceTree = "<group>"; };
 		B92A2C8221578D28002874E5 /* CaptureSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureSession.swift; sourceTree = "<group>"; };
 		B940E38721A77192003B3C0B /* enhance@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "enhance@3x.png"; sourceTree = "<group>"; };
@@ -259,7 +301,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1D4BD02202C4F4100FCDDEC /* WeScan.framework in Frameworks */,
-				B08C917521C3923F006C8ED5 /* AcuantMobileSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,7 +373,6 @@
 		A1D4BCAE202C4F3800FCDDEC = {
 			isa = PBXGroup;
 			children = (
-				B08C916D21C3923F006C8ED5 /* AcuantMobileSDK.framework */,
 				74E27848215446C200361812 /* FBSnapshotTestCase.xcodeproj */,
 				A1D4BCB9202C4F3800FCDDEC /* WeScanSampleProject */,
 				A1D4BCEE202C4F4100FCDDEC /* WeScan */,
@@ -371,6 +411,7 @@
 			isa = PBXGroup;
 			children = (
 				A1DF909F2031D89D00841A11 /* ImageScannerController.swift */,
+				B092ACD621E7345600F92197 /* PKCCrop */,
 				A1DF90E220358C9E00841A11 /* Protocols */,
 				A1F22ECF203199E7001723AD /* Scan */,
 				A1F22ED020319A03001723AD /* Edit */,
@@ -443,6 +484,7 @@
 				A11C5B9B2046A20C005075FE /* Error.swift */,
 				A14089B9204D92EA0009530F /* EditScanCornerView.swift */,
 				B05E6545219EB31B00368648 /* CardOverlayView.swift */,
+				B0D1DA7721E346AC00242C7A /* ImageCropper.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -466,6 +508,50 @@
 				C31DD8A220C087D80072D439 /* ZoomGestureController.swift */,
 			);
 			path = Edit;
+			sourceTree = "<group>";
+		};
+		B092ACD621E7345600F92197 /* PKCCrop */ = {
+			isa = PBXGroup;
+			children = (
+				B092ACD721E7345600F92197 /* Classes */,
+				B092ACE221E7345600F92197 /* Assets */,
+			);
+			path = PKCCrop;
+			sourceTree = "<group>";
+		};
+		B092ACD721E7345600F92197 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				B092ACD921E7345600F92197 /* PKCCrop.swift */,
+				B092ACDA21E7345600F92197 /* PKCCropViewController.swift */,
+				B092ACDB21E7345600F92197 /* UIView+.swift */,
+				B092ACDC21E7345600F92197 /* PKCCropViewController.xib */,
+				B092ACDD21E7345600F92197 /* UIImageView+.swift */,
+				B092ACDE21E7345600F92197 /* PKCButton.swift */,
+				B092ACDF21E7345600F92197 /* PKCCropLineView.xib */,
+				B092ACE021E7345600F92197 /* PKCCropHelper.swift */,
+				B092ACE121E7345600F92197 /* PKCCropLineView.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		B092ACE221E7345600F92197 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				B0595F7F21ED97760039102D /* backIos.png */,
+				B0595F7621ED97760039102D /* backIos@2x.png */,
+				B0595F7E21ED97760039102D /* backIos@3x.png */,
+				B092ACFE21E85C0400F92197 /* btnImgRotate.png */,
+				B092ACFF21E85C0400F92197 /* btnImgRotate@2x.png */,
+				B092AD0021E85C0400F92197 /* btnImgRotate@3x.png */,
+				B092ACE421E7345600F92197 /* pkc_crop_rotate_right.png */,
+				B092ACE521E7345600F92197 /* pkc_crop_bottom_right.png */,
+				B092ACE621E7345600F92197 /* pkc_crop_bottom_left.png */,
+				B092ACE721E7345600F92197 /* pkc_crop_top_right.png */,
+				B092ACE821E7345600F92197 /* pkc_crop_rotate_left.png */,
+				B092ACE921E7345600F92197 /* pkc_crop_top_left.png */,
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 		B9274D2D219AE10B00F9FCD1 /* Flash */ = {
@@ -500,6 +586,7 @@
 		B94FBB9D2178647B001ED1B4 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				B092ACCB21E6FE6900F92197 /* passportOverlay.png */,
 				B983380121A6CA4E00AAE307 /* Enhance */,
 				B9274D2D219AE10B00F9FCD1 /* Flash */,
 				B9274D30219AE16000F9FCD1 /* FlashUnavailable */,
@@ -726,13 +813,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				B97B49C9216C6C6800B2235B /* Localizable.strings in Resources */,
+				B092ACF121E7345600F92197 /* PKCCropLineView.xib in Resources */,
+				B092ACFA21E7345700F92197 /* pkc_crop_top_left.png in Resources */,
+				B092AD0321E85C0400F92197 /* btnImgRotate@3x.png in Resources */,
 				B94FBBB52178653C001ED1B4 /* flashUnavailable@2x.png in Resources */,
 				B94FBBAD2178652B001ED1B4 /* flash.png in Resources */,
+				B092ACF721E7345600F92197 /* pkc_crop_bottom_left.png in Resources */,
+				B092ACEE21E7345600F92197 /* PKCCropViewController.xib in Resources */,
+				B0595F8121ED97760039102D /* backIos@3x.png in Resources */,
+				B092AD0121E85C0400F92197 /* btnImgRotate.png in Resources */,
+				B092ACF821E7345700F92197 /* pkc_crop_top_right.png in Resources */,
 				B94FBBAF2178652B001ED1B4 /* flash@2x.png in Resources */,
 				B940E38C21A77192003B3C0B /* enhance.png in Resources */,
+				B092AD0221E85C0400F92197 /* btnImgRotate@2x.png in Resources */,
+				B092ACF521E7345600F92197 /* pkc_crop_rotate_right.png in Resources */,
 				B94FBBB32178653C001ED1B4 /* flashUnavailable@3x.png in Resources */,
+				B092ACF921E7345700F92197 /* pkc_crop_rotate_left.png in Resources */,
+				B092ACD321E6FE6900F92197 /* passportOverlay.png in Resources */,
 				B94FBBAE2178652B001ED1B4 /* flash@3x.png in Resources */,
+				B0595F8221ED97760039102D /* backIos.png in Resources */,
+				B0595F8021ED97760039102D /* backIos@2x.png in Resources */,
 				B940E38A21A77192003B3C0B /* enhance@3x.png in Resources */,
+				B092ACF621E7345600F92197 /* pkc_crop_bottom_right.png in Resources */,
 				B940E38B21A77192003B3C0B /* enhance@2x.png in Resources */,
 				B94FBBB42178653C001ED1B4 /* flashUnavailable.png in Resources */,
 			);
@@ -765,6 +867,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A11C5CDB20495EC9005075FE /* AVCaptureVideoOrientation+Utils.swift in Sources */,
+				B092ACEC21E7345600F92197 /* PKCCropViewController.swift in Sources */,
 				A1DF90F22035992A00841A11 /* CGAffineTransform+Utils.swift in Sources */,
 				B079B32921AFC67F000AA341 /* CardScannerViewController.swift in Sources */,
 				A1F22EA3202DAA74001723AD /* RectangleFeaturesFunnel.swift in Sources */,
@@ -775,14 +878,21 @@
 				A1D4BD0C202C504F00FCDDEC /* ScannerViewController.swift in Sources */,
 				A11C5B9C2046A20C005075FE /* Error.swift in Sources */,
 				A1D4BD15202C6CC000FCDDEC /* Array+Utils.swift in Sources */,
+				B092ACF021E7345600F92197 /* PKCButton.swift in Sources */,
 				B92A2C8321578D28002874E5 /* CaptureSession.swift in Sources */,
 				C3E2EB8E20B8970800A42E58 /* UIImage+Utils.swift in Sources */,
 				A165F67E2044741B002D5ED6 /* ShutterButton.swift in Sources */,
+				B092ACF321E7345600F92197 /* PKCCropLineView.swift in Sources */,
 				B940E3AD21A829EE003B3C0B /* CaptureSession+Orientation.swift in Sources */,
+				B092ACED21E7345600F92197 /* UIView+.swift in Sources */,
 				B992E831210C36A400C33A21 /* VisionRectangleDetector.swift in Sources */,
 				A1F22EA5202DB3AA001723AD /* CGPoint+Utils.swift in Sources */,
+				B092ACF221E7345600F92197 /* PKCCropHelper.swift in Sources */,
 				B05E6546219EB31B00368648 /* CardOverlayView.swift in Sources */,
+				B092ACEF21E7345600F92197 /* UIImageView+.swift in Sources */,
 				A14089BA204D92EA0009530F /* EditScanCornerView.swift in Sources */,
+				B092ACEB21E7345600F92197 /* PKCCrop.swift in Sources */,
+				B0D1DA7821E346AC00242C7A /* ImageCropper.swift in Sources */,
 				A1DF90A02031D89D00841A11 /* ImageScannerController.swift in Sources */,
 				B9274D3A219B951000F9FCD1 /* CIImage+Utils.swift in Sources */,
 				C31DD8A320C087D80072D439 /* ZoomGestureController.swift in Sources */,

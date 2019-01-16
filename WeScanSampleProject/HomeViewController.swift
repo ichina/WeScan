@@ -8,7 +8,6 @@
 
 import UIKit
 import WeScan
-import AcuantMobileSDK
 
 final class HomeViewController: UIViewController {
     
@@ -18,6 +17,15 @@ final class HomeViewController: UIViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
+
+    lazy private var resultImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        imageView.layer.borderWidth = 1
+        return imageView
+    }()
+
     
     lazy private var logoLabel: UILabel = {
         let label = UILabel()
@@ -53,6 +61,7 @@ final class HomeViewController: UIViewController {
         view.addSubview(logoImageView)
         view.addSubview(logoLabel)
         view.addSubview(scanButton)
+        view.addSubview(resultImageView)
     }
     
     private func setupConstraints() {
@@ -75,14 +84,26 @@ final class HomeViewController: UIViewController {
             scanButton.heightAnchor.constraint(equalToConstant: 40.0),
             scanButton.widthAnchor.constraint(equalToConstant: 150.0)
         ]
-        
-        NSLayoutConstraint.activate(scanButtonConstraints + logoLabelConstraints + logoImageViewConstraints)
+
+        let resultImageViewConstraints = [
+            resultImageView.widthAnchor.constraint(equalToConstant: 300.0),
+            resultImageView.heightAnchor.constraint(equalToConstant: 300.0),
+            resultImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            NSLayoutConstraint(item: resultImageView, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 0.75, constant: 0.0)
+        ]
+
+        NSLayoutConstraint.activate(scanButtonConstraints + logoLabelConstraints + logoImageViewConstraints + resultImageViewConstraints)
     }
     
     // MARK: - Actions
     
     @objc func presentScanController(_ sender: UIButton) {
-        let scannerVC = ImageScannerController(imageCropper: AcuantImageCropper())
+        guard resultImageView.image == nil else {
+            resultImageView.image = nil
+            resultImageView.backgroundColor = nil
+            return
+        }
+        let scannerVC = ImageScannerController(scanType: .card(.front))
         scannerVC.imageScannerDelegate = self
         scannerVC.cardScannerDelegate = self
 
@@ -97,6 +118,8 @@ extension HomeViewController: ImageScannerControllerDelegate {
     }
     
     func imageScannerController(_ scanner: ImageScannerController, didFinishScanningWithResults results: ImageScannerResults) {
+        resultImageView.image = results.scannedImage
+        resultImageView.backgroundColor = .white
         scanner.dismiss(animated: true, completion: nil)
     }
     
@@ -109,68 +132,10 @@ extension HomeViewController: ImageScannerControllerDelegate {
 extension HomeViewController: CardScannerControllerDelegate {
     func cardScannerController(_ scanner: ImageScannerController,
                                didFinishScanningWithResults results: CardScannerResults) {
-        print(results)
+
+        resultImageView.image = results.frontSide.scannedImage
+        resultImageView.backgroundColor = .white
+        scanner.dismiss(animated: true, completion: nil)
     }
-
-}
-
-final class AcuantImageCropper: ImageCropper, InitializationDelegate {
-    let credential = Credential()
-
-    static var isInitialized = false
-
-    init() {
-        if !AcuantImageCropper.isInitialized {
-            let endPoints = Endpoints()
-            endPoints.frmEndpoint = "https://frm.acuant.net/api/v1"
-            endPoints.idEndpoint = "https://services.assureid.net"
-            endPoints.healthInsuranceEndpoint = "https://medicscan.acuant.net/api/v1"
-
-
-            credential.endpoints = endPoints
-            credential.username = "anton@osome.com"
-            credential.password = "vasmyc627rjtmz8t"
-            credential.subscription = "d761aec3-3f39-4c0f-9375-8256c4df7d85"
-
-            Controller.initialize(credential: credential, delegate:self)
-        }
-    }
-
-    func cropImage(_ image: UIImage, quad: Quadrilateral) -> UIImage? {
-        let image = cropAquantImage(image: image)
-        guard let result = image?.image else {
-            print(image?.error)
-            return nil
-        }
-        return result
-    }
-
-    func cropAquantImage(image: UIImage) -> Image? {
-        let croppingData = CroppingData()
-        croppingData.image = image
-
-        let cardAttributes = CardAttributes()
-        cardAttributes.cardType = CardType.AUTO
-
-        let croppingOptions = CroppingOptions()
-        croppingOptions.cardAtributes = cardAttributes
-        croppingOptions.imageMetricsRequired = true
-        croppingOptions.isHealthCard = false
-//        let start = CFAbsoluteTimeGetCurrent()
-        let croppedImage = Controller.crop(options: croppingOptions, data: croppingData)
-//        let elapsed = CFAbsoluteTimeGetCurrent() - start
-//        print("Crop Time:\(elapsed)")
-        return croppedImage
-    }
-
-    func initializationFinished(error: AcuantMobileSDK.AcuantError?) {
-        if let error = error {
-            print(error)
-            return
-        }
-        AcuantImageCropper.isInitialized = true
-        print("INITIALIZED")
-    }
-
 
 }

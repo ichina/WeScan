@@ -40,18 +40,18 @@ class ScannerViewController: UIViewController {
     
     lazy private var cancelButton: UIButton = {
         let button = UIButton()
-        button.setTitle(NSLocalizedString("wescan.scanning.cancel", tableName: nil, bundle: Bundle(for: ScannerViewController.self), value: "Cancel", comment: "The cancel button"), for: .normal)
+        button.setImage(UIImage(named: "backIos", in: Bundle(for: ScannerViewController.self),
+                                compatibleWith: nil), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(cancelImageScannerController), for: .touchUpInside)
         return button
     }()
     
-    lazy private var toolbar: UIToolbar = {
+    lazy internal var toolbar: UIToolbar = {
         let toolbar = UIToolbar()
         toolbar.barStyle = .blackTranslucent
         toolbar.tintColor = .white
         toolbar.translatesAutoresizingMaskIntoConstraints = false
-        toolbar.isHidden = true
         return toolbar
     }()
     
@@ -84,7 +84,7 @@ class ScannerViewController: UIViewController {
         setupConstraints()
 
         captureSessionManager = CaptureSessionManager(videoPreviewLayer: videoPreviewlayer)
-        captureSessionManager?.delegate = self
+        captureSessionManager?.delegate = self  
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -178,8 +178,10 @@ class ScannerViewController: UIViewController {
             }
             
             cancelButtonConstraints = [
-                cancelButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24.0),
-                view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: cancelButton.bottomAnchor, constant: (65.0 / 2) - 10.0)
+                cancelButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0),
+                cancelButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 20 + (isEarsPhone ? 20 : 0)),
+                cancelButton.widthAnchor.constraint(equalToConstant: 40.0),
+                cancelButton.widthAnchor.constraint(equalToConstant: 40.0)
             ]
             
             let shutterButtonBottomConstraint = view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: shutterButton.bottomAnchor, constant: 8.0)
@@ -193,8 +195,10 @@ class ScannerViewController: UIViewController {
             ]
             
             cancelButtonConstraints = [
-                cancelButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 24.0),
-                view.bottomAnchor.constraint(equalTo: cancelButton.bottomAnchor, constant: (65.0 / 2) - 10.0)
+                cancelButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0),
+                cancelButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 20 + (isEarsPhone ? 20 : 0)),
+                cancelButton.widthAnchor.constraint(equalToConstant: 40.0),
+                cancelButton.widthAnchor.constraint(equalToConstant: 40.0)
             ]
             
             let shutterButtonBottomConstraint = view.bottomAnchor.constraint(equalTo: shutterButton.bottomAnchor, constant: 8.0)
@@ -274,8 +278,9 @@ extension ScannerViewController: RectangleDetectionDelegateProtocol {
     func captureSessionManager(_ captureSessionManager: CaptureSessionManager, didCapturePicture picture: UIImage, withQuad quad: Quadrilateral?) {
         activityIndicator.stopAnimating()
         
-        self.handleImage(picture, quad: quad)
+        self.handleImage(picture.resetOrientation(), quad: quad)
         shutterButton.isUserInteractionEnabled = true
+
     }
     
     func captureSessionManager(_ captureSessionManager: CaptureSessionManager, didDetectQuad quad: Quadrilateral?, _ imageSize: CGSize) {

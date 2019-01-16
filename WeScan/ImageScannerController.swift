@@ -47,6 +47,7 @@ public final class ImageScannerController: UINavigationController {
 
     weak public var cardScannerDelegate: CardScannerControllerDelegate?
     internal var cardFrontSide: ImageScannerResults?
+    internal let scanType: ScanType
 
     // MARK: - Life Cycle
     
@@ -59,8 +60,15 @@ public final class ImageScannerController: UINavigationController {
         return view
     }()
     
-    public required init(imageCropper: ImageCropper = DefaultImageCropper()) {
-        let scannerViewController = CardScannerViewController(imageCropper: imageCropper)
+    public required init(scanType: ScanType = .general) {
+        var scannerViewController: UIViewController
+        if case .general = scanType {
+            scannerViewController = ScannerViewController()
+        } else {
+            scannerViewController = CardScannerViewController(scanType: scanType)
+        }
+
+        self.scanType = scanType
         super.init(rootViewController: scannerViewController)
         navigationBar.tintColor = .white
         navigationBar.isTranslucent = true
@@ -71,6 +79,7 @@ public final class ImageScannerController: UINavigationController {
     }
     
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        self.scanType = .general
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
@@ -132,4 +141,10 @@ public struct CardScannerResults {
 public protocol CardScannerControllerDelegate: NSObjectProtocol {
     func cardScannerController(_ scanner: ImageScannerController,
                                didFinishScanningWithResults results: CardScannerResults)
+}
+
+public enum ScanType {
+    case general
+    case card(CardSide)
+    case passport
 }
