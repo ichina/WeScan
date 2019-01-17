@@ -145,22 +145,48 @@ extension CardScannerViewController: UIImagePickerControllerDelegate, UINavigati
 
 extension CardScannerViewController: PKCCropDelegate {
     func pkcCropImage(_ image: UIImage?, originalImage: UIImage?) {
-        guard let image = image else { return }
-        if let imageScannerController = self.navigationController as? ImageScannerController {
+        guard let image = image,
+            let imageScannerController = self.navigationController as? ImageScannerController,
+        let vc = imageScannerController.presentedViewController else { return }
 
-            var results = ImageScannerResults(
-                originalImage: image, scannedImage: image, enhancedImage: nil,
-                doesUserPreferEnhancedImage: false, detectedRectangle: EditScanViewController.defaultQuad(forImage: image)
-            )
+        var results = ImageScannerResults(
+            originalImage: image, scannedImage: image, enhancedImage: nil,
+            doesUserPreferEnhancedImage: false, detectedRectangle: EditScanViewController.defaultQuad(forImage: image)
+        )
+
+        if case .card(let side) = scanType {
+            if side == .front {
+                imageScannerController.cardFrontSide = results
+                vc.dismiss(animated: true) {
+                    let scannerViewController = CardScannerViewController(scanType: .card(.back))
+                    imageScannerController.pushViewController(scannerViewController, animated: true)
+                }
+            } else {
+                vc.dismiss(animated: true) {
+                    guard let frontResult = imageScannerController.cardFrontSide else { return }
+                    imageScannerController.cardScannerDelegate?
+                        .cardScannerController(
+                            imageScannerController,
+                            didFinishScanningWithResults:
+                            CardScannerResults(
+                                frontSide: frontResult,
+                                backSide: results
+                            )
+                    )
+                }
+            }
+        } else {
 
             if case .passport = scanType, let newImage = image.imageRotatedByDegrees(-90, flip: false) {
                 results.originalImage = newImage
             }
+            vc.dismiss(animated: true) {
+                imageScannerController.imageScannerDelegate?
+                    .imageScannerController(
+                        imageScannerController,
+                        didFinishScanningWithResults: results)
+            }
 
-            imageScannerController.imageScannerDelegate?
-                .imageScannerController(
-                    imageScannerController,
-                    didFinishScanningWithResults: results)
         }
     }
 
@@ -171,13 +197,6 @@ extension CardScannerViewController: PKCCropDelegate {
 
     //Successful crop
     func pkcCropComplete(_ viewController: PKCCropViewController) {
-        if let vc = viewController.presentingViewController {
-            vc.dismiss(animated: true) { [weak self] in
-                self?.dismiss(animated: true, completion: nil)
-            }
-            return
-        }
-        viewController.dismiss(animated: true, completion: nil)
     }
 
 }

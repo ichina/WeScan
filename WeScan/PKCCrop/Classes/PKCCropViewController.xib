@@ -26,7 +26,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pt9-xv-pY8">
-                    <rect key="frame" x="0.0" y="22" width="375" height="645"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 </scrollView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CFn-md-hcu">
                     <rect key="frame" x="20" y="605" width="40" height="40"/>
@@ -41,10 +41,10 @@
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="pt9-xv-pY8" secondAttribute="trailing" id="4et-n4-DL8"/>
                 <constraint firstAttribute="bottom" secondItem="CFn-md-hcu" secondAttribute="bottom" constant="22" id="4ht-50-lib"/>
-                <constraint firstItem="pt9-xv-pY8" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="topMargin" constant="2" id="Juu-4F-tsB"/>
+                <constraint firstItem="pt9-xv-pY8" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Juu-4F-tsB"/>
                 <constraint firstItem="CFn-md-hcu" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="YqR-Mp-XX5"/>
                 <constraint firstItem="pt9-xv-pY8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="fY0-Cr-Tn7"/>
-                <constraint firstAttribute="bottomMargin" secondItem="pt9-xv-pY8" secondAttribute="bottom" id="mtf-mK-ceZ"/>
+                <constraint firstAttribute="bottom" secondItem="pt9-xv-pY8" secondAttribute="bottom" id="mtf-mK-ceZ"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <point key="canvasLocation" x="33.5" y="53.5"/>
